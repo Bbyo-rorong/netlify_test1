@@ -58,22 +58,16 @@ function convertCurrency() {
         return;
     }
 
-    // [수정된 부분] API 키와 원래 주소를 지웠습니다!
-    // 대신 우리가 만든 '비밀 요원(getRates)'에게 요청을 보냅니다.
-    // ?from=USD 처럼 뒤에 기준 통화를 붙여서 보냅니다.
-    const url = `/.netlify/functions/get-Rates?from=${fromCurrency}`;
+    // API Key가 없는 안전한 주소
+    const url = `/.netlify/functions/get-rates?from=${fromCurrency}`;
 
     fetch(url)
-        .then(response => response.json())
+        .then(res => res.json())
         .then(data => {
-            // 비밀 요원이 오류를 보냈는지 확인
-            if (data.error) {
-                throw new Error(data.error);
-            }
-
             if (data.result === 'success') {
                 const rate = data.conversion_rates[toCurrency];
                 const convertedAmount = amount * rate;
+
                 const fromCurrencyName = currencyNames[fromCurrency];
                 const toCurrencyName = currencyNames[toCurrency];
 
@@ -84,6 +78,7 @@ function convertCurrency() {
             }
         })
         .catch(error => {
-            document.getElementById('result').innerText = "오류가 발생했습니다: " + error.message;
+            document.getElementById('result').innerText =
+                "오류 발생: " + error.message;
         });
 }
