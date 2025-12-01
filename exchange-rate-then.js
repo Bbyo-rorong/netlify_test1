@@ -61,7 +61,7 @@ function convertCurrency() {
     // [수정된 부분] API 키와 원래 주소를 지웠습니다!
     // 대신 우리가 만든 '비밀 요원(getRates)'에게 요청을 보냅니다.
     // ?from=USD 처럼 뒤에 기준 통화를 붙여서 보냅니다.
-    const url = `/.netlify/functions/get-rates?from=${fromCurrency}`;
+    const url = `/.netlify/functions/get-Rates?from=${fromCurrency}`;
 
     fetch(url)
         .then(response => response.json())
